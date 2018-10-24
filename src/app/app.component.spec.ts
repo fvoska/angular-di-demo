@@ -1,8 +1,19 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { WINDOW } from './injection-tokens';
+import { componentFactoryName } from '@angular/compiler';
+
+const mockWindow = {
+  requestAnimationFrame(cb: Function) {
+    setTimeout(cb);
+  }
+};
 
 describe('AppComponent', () => {
+  let app: AppComponent;
+  let windowInstance: Window;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -11,25 +22,40 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      providers: [
+        {
+          provide: 'fooBar',
+          useValue: 'testing bar'
+        },
+
+        {
+          provide: 'random',
+          useValue: 0.5,
+        },
+
+        {
+          provide: WINDOW,
+          useValue: mockWindow,
+        },
+      ]
     }).compileComponents();
+
+    const fixture = TestBed.createComponent(AppComponent);
+    app = fixture.debugElement.componentInstance;
+    windowInstance = TestBed.get(WINDOW);
   }));
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'angular-di'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('angular-di');
-  });
+  it('should run the animation in animation frame', () => {
+    spyOn(windowInstance, 'requestAnimationFrame');
 
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to angular-di!');
+    expect(windowInstance.requestAnimationFrame).not.toHaveBeenCalled();
+
+    app.startAnimation();
+
+    expect(windowInstance.requestAnimationFrame).toHaveBeenCalled();
   });
 });
