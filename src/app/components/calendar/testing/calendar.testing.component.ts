@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, Input } from '@angular/core';
-import { ICalendarComponent } from './calendar.component.interface';
+import { ICalendarComponent } from '../calendar.component.interface';
 
 @Component({
   selector: 'app-calendar',

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RandyComponent } from './randy.component';
-import { CalendarTestingModule } from '../../components/calendar/calendar.testing.module';
+import { CalendarTestingModule } from '../../components/calendar/testing/calendar.testing.module';
 import { SomeService } from '../../service/some-service/some-service.service';
 import { BarModule } from '../../components/bar/bar.module';
 

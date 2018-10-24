@@ -5,7 +5,9 @@ describe('CalendarService', () => {
   let service: CalendarService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ });
+    TestBed.configureTestingModule({
+      providers: [CalendarService],
+    });
 
     service = TestBed.get(CalendarService);
   });

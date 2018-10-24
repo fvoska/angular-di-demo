@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output, Input } from '@angular/core';
-import { CalendarService } from './calendar.service';
+import { CalendarService } from './calendar-service/calendar.service';
 import { ICalendarComponent } from './calendar.component.interface';
 
 @Component({
